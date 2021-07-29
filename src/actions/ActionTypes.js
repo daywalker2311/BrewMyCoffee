@@ -1,0 +1,1 @@
+export const SET_COFFEE_OBJ = 'SET_COFFEE_OBJ';

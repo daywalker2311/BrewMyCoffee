@@ -15,6 +15,8 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import Navigators from './src/navigators';
+import { store } from './src/store/index';
+import { Provider } from 'react-redux';
 
 const App = props => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,7 +26,9 @@ const App = props => {
   };
 
   return (
-    <Navigators />
+    <Provider store={store}>
+      <Navigators />
+    </Provider>
   );
 };
 

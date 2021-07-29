@@ -8,6 +8,7 @@ const CoffeeElementItem = ({ title, ...otherProps }) => {
     return (
         <List.Item
             title={title}
+            titleStyle={{ color: 'white' }}
             left={otherProps =>
                 <Image
                     source={
@@ -20,7 +21,7 @@ const CoffeeElementItem = ({ title, ...otherProps }) => {
                                 )
                             )
                     }
-                    style={{ width: 50, height: 50, }}
+                    style={{ width: 50, height: 50, marginHorizontal: 10 }}
                 />
             }
             {...otherProps}

@@ -19,7 +19,7 @@ const Navigators = (props) => {
                     component={StartMachineScreen}
                     options={{
                         //headerShown: false,
-                        headerTitle: 'Dark Roasted Beans'
+                        headerTitle: 'Brew My Coffee'
                     }}
                 />
 

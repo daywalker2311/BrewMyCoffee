@@ -20,16 +20,17 @@ const StartMachineScreen = (props) => {
                 <View style={{ marginHorizontal: 15 }}>
                     <Subheading style={{ fontWeight: 'bold', textDecorationLine: "underline" }}>{'\n'}How does this work</Subheading>
 
+
                     <Paragraph>{'\n'}{'\n'}Dont have NFC? We got you</Paragraph>
-
-                    <Button mode="outlined"
-                        style={{ backgroundColor: primaryColor }}
-                        onPress={() => props.navigation.navigate('SelectCoffeeStyleScreen')}
-                    >Start</Button>
-
                 </View>
 
             </View>
+
+
+            <Button mode="outlined"
+                style={styles.start_btn}
+                onPress={() => props.navigation.navigate('SelectCoffeeStyleScreen')}
+            >Start</Button>
         </Surface>
     )
 }
@@ -42,4 +43,14 @@ const styles = StyleSheet.create({
         height: screenHeight * 0.55,
         marginTop: 50
     },
+    start_btn: {
+        backgroundColor: primaryColor,
+        position: 'absolute',
+        bottom: 30,
+        width: screenWidth * 0.92,
+        alignSelf: 'center',
+        height: 45,
+        justifyContent: 'center',
+
+    }
 })

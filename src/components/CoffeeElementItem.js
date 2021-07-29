@@ -4,14 +4,22 @@ import { List, Avatar } from 'react-native-paper';
 import { primaryColor } from '../constants';
 
 const CoffeeElementItem = ({ title, ...otherProps }) => {
-    //console.log(otherProps)
 
     return (
         <List.Item
             title={title}
             left={otherProps =>
                 <Image
-                    source={require('../assets/cappuccino.png')}
+                    source={
+                        title === 'Cappuccino' ? require('../assets/cappuccino.png') :
+                            (title === 'Espresso' ? require('../assets/espresso.png') :
+                                (title === 'Large' ? require('../assets/large.png') :
+                                    (title === 'Venti' ? require('../assets/medium.png') :
+                                        require('../assets/small.png')
+                                    )
+                                )
+                            )
+                    }
                     style={{ width: 50, height: 50, }}
                 />
             }

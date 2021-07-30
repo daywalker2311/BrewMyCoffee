@@ -22,6 +22,7 @@ const SelectCoffeeStyleScreen = (props) => {
             setIsLoading(false);
         })
             .catch((err) => {
+                setIsLoading(false);
                 console.log("error : ", err)
             })
     }, []);

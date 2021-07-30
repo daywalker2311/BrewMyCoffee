@@ -15,13 +15,20 @@ const SelectCoffeeExtrasScreen = (props) => {
 
     useEffect(() => {
         setAvailableExtras(getExtras());
-        //console.log("availableExtras : ", availableExtras);
     }, []);
 
     const getExtras = () => {
+        coffeeObjExtras.forEach(element => {
+            element.subselections.forEach(element2 => {
+                element2.checked = false;
+                //console.log("==========> ", element2);
+            });
+        });
+
         let arr = [];
         coffeeObjExtras.forEach(element => {
             selectedCoffeeExtras.forEach(item => {
+                //console.log("element to be pushed : ", element);
                 (element._id == item) ?
                     (
                         arr.push(element)
@@ -29,17 +36,48 @@ const SelectCoffeeExtrasScreen = (props) => {
             });
         });
 
-        //console.log("extras object after filtering : ", arr);
+        console.log("extras object after filtering : ", arr);
         return arr;
     }
 
-    const onCheckboxChange = (obj) => {
-        console.log("coffeee subslections : ", store.getState().coffeeItems.selectedCoffeeSubselections);
-        //setChecked(!checked)
+    const onCheckboxChange = (obj, index, index2) => {
+        let newSelection = availableExtras;
+        let prevValue = newSelection[index].subselections[index2].checked;
+        newSelection[index].subselections[index2].checked = !prevValue;
+        console.log("newselection array cahnge value: ", newSelection[index].subselections[index2]);
 
+        setAvailableExtras(newSelection);
+
+        // for (let index = 0; index < newSelection.length; index++) {
+        //     console.log("newselection array BEFORE  cahnge : ", newSelection[index].subselections);
+
+        //     const subSelections = newSelection[index].subselections;
+        //     console.log("obj in oncheckchange : ", obj)
+        //     subSelections.forEach(element => {
+        //         console.log("subselections element : ", element)
+
+        //         if (element._id == obj._id) {
+        //             console.log("ischecked ? ", element.checked);
+        //             element.checked = !element.checked
+        //             console.log("ischecked after ? ", element.checked);
+        //         }
+
+        //     });
+        //     console.log("newselection array after cahnge : ", newSelection[index].subselections);
+        // }
+
+    }
+
+
+    const onCheckboxChange2 = (obj) => {
+        console.log("coffeee subslections : ", store.getState().coffeeItems.selectedCoffeeSubselections);
+
+        console.log("oncheckcahnge : ", obj)
         const currentSubselection = store.getState().coffeeItems.selectedCoffeeSubselections;
+
         if (currentSubselection.length === 0) {
             console.log("empty")
+            obj.checked = true;
             store.dispatch({ type: 'SET_SELECTED_COFFEE_SUBSELECTIONS', newValue: [obj] })
         } else {
             console.log("not empty")
@@ -54,6 +92,7 @@ const SelectCoffeeExtrasScreen = (props) => {
                 }
             }
             console.log("not present, pushing... ", obj.name)
+            obj.checked = true;
 
             currentSubselection.push(obj);
             store.dispatch({ type: 'SET_SELECTED_COFFEE_SUBSELECTIONS', newValue: currentSubselection });
@@ -72,8 +111,8 @@ const SelectCoffeeExtrasScreen = (props) => {
                     {
                         //DISCLAIMER : if we shift the '(' below to the next line, the map will run TWICE !!!
                         availableExtras && (
-                            availableExtras.map((item) => {
-                                console.log("item :: ", item);
+                            availableExtras.map((item, index1) => {
+                                console.log("item :: ", item, index1);
                                 return (
                                     <View style={{ marginBottom: 5 }}>
                                         <List.Accordion
@@ -90,39 +129,20 @@ const SelectCoffeeExtrasScreen = (props) => {
                                                     style={{ width: 50, height: 50, marginHorizontal: 10 }}
                                                 />
                                             }
-                                            style={{
-                                                height: 90,
-                                                paddingHorizontal: 10,
-                                                backgroundColor: primaryColor,
-                                                justifyContent: 'center',
-                                                borderTopLeftRadius: 4,
-                                                borderTopRightRadius: 4,
-                                            }}
+                                            style={styles.list_acc_style}
                                         >
-                                            <View style={{
-                                                backgroundColor: primaryColor,
-                                                borderBottomLeftRadius: 5,
-                                                borderBottomRightRadius: 5,
-                                                paddingLeft: 0,
-                                                paddingVertical: 20
-                                            }}>
+                                            <View style={styles.list_container}>
 
-                                                <View style={{
-                                                    width: 'auto',
-                                                    backgroundColor: 'white',
-                                                    height: 1,
-                                                    marginHorizontal: 20,
-                                                    marginBottom: 15
-                                                }} />
+                                                <View style={styles.divider} />
                                                 {
-                                                    item.subselections.map((obj, index) => {
-                                                        console.log("index : ", obj._id, index)
+                                                    item.subselections.map((obj, index2) => {
+                                                        console.log("checked : ", availableExtras[index1].subselections[index2])
                                                         return (
                                                             <List.Item
                                                                 title={obj.name}
                                                                 key={obj._id}
                                                                 titleStyle={{ color: 'white' }}
-                                                                right={props =>
+                                                                right={(props) =>
                                                                     <CheckBox
                                                                         center
                                                                         iconRight
@@ -130,13 +150,11 @@ const SelectCoffeeExtrasScreen = (props) => {
                                                                         checkedColor="white"
                                                                         uncheckedIcon='circle-o'
                                                                         uncheckedColor="white"
-                                                                        checked={checked}
+                                                                        checked={availableExtras[index1].subselections[index2].checked}
                                                                         size={26}
                                                                         onPress={() => {
-                                                                            onCheckboxChange(obj);
-                                                                        }
-
-                                                                        }
+                                                                            onCheckboxChange(obj, index1, index2);
+                                                                        }}
                                                                     />
                                                                 }
                                                                 style={styles.inner_element}
@@ -159,7 +177,12 @@ const SelectCoffeeExtrasScreen = (props) => {
                 uppercase={false}
                 color="white"
                 style={styles.done_btn}
-            //onPress={() => props.navigation.navigate('OrderCompleteScreen')}
+                onPress={() => {
+                    store.dispatch({ type: 'SET_SELECTED_COFFEE_SUBSELECTIONS', newValue: availableExtras });
+
+                    props.navigation.navigate('OrderCompleteScreen')
+                }
+                }
             >Done</Button>
 
         </Surface>
@@ -195,4 +218,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
     },
+    list_acc_style: {
+        height: 90,
+        paddingHorizontal: 10,
+        backgroundColor: primaryColor,
+        justifyContent: 'center',
+        borderTopLeftRadius: 4,
+        borderTopRightRadius: 4,
+    },
+    divider: {
+        width: 'auto',
+        backgroundColor: 'white',
+        height: 1,
+        marginHorizontal: 20,
+        marginBottom: 15
+    },
+    list_container: {
+        backgroundColor: primaryColor,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+        paddingLeft: 0,
+        paddingVertical: 20
+    }
 })

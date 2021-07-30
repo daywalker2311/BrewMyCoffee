@@ -5,6 +5,9 @@ import StartMachineScreen from '../screens/StartMachineScreen';
 import SelectCoffeeStyleScreen from '../screens/SelectCoffeeStyleScreen';
 import SelectCoffeeSizeScreen from '../screens/SelectCoffeeSizeScreen';
 import SelectCoffeeExtrasScreen from '../screens/SelectCoffeeExtrasScreen';
+import OrderCompleteScreen from '../screens/OrderCompleteScreen';
+import { secondaryColor } from '../constants';
+
 
 const Stack = createStackNavigator();
 
@@ -50,6 +53,14 @@ const Navigators = (props) => {
                     }}
                 />
 
+                <Stack.Screen
+                    name="OrderCompleteScreen"
+                    component={OrderCompleteScreen}
+                    options={{
+                        headerTitle: 'Brew With Dewalker',
+                        headerStyle: { backgroundColor: secondaryColor }
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )

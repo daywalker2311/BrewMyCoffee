@@ -11,7 +11,6 @@ const SelectCoffeeExtrasScreen = (props) => {
         'Each child in a list should have a unique "key" prop', // TODO: Remove when fixed
     ]);
 
-    const [checked, setChecked] = useState(false);
     const [availableExtras, setAvailableExtras] = useState([]);
 
     const selectedCoffeeExtras = store.getState().coffeeItems.selectedCoffeeType.extras;
@@ -32,7 +31,6 @@ const SelectCoffeeExtrasScreen = (props) => {
         let arr = [];
         coffeeObjExtras.forEach(element => {
             selectedCoffeeExtras.forEach(item => {
-                //console.log("element to be pushed : ", element);
                 (element._id == item) ?
                     (
                         arr.push(element)
@@ -48,7 +46,7 @@ const SelectCoffeeExtrasScreen = (props) => {
         let newSelection = availableExtras;
         let prevValue = newSelection[index].subselections[index2].checked;
         newSelection[index].subselections[index2].checked = !prevValue;
-        console.log("newselection array cahnge value: ", newSelection[index].subselections[index2]);
+        console.log("newselection array change value: ", newSelection[index].subselections[index2]);
 
         setAvailableExtras(newSelection);
     }

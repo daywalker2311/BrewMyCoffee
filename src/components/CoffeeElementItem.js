@@ -5,6 +5,21 @@ import { primaryColor } from '../constants';
 
 const CoffeeElementItem = ({ title, ...otherProps }) => {
 
+    const getImageByTitle = (title) => {
+        switch (title) {
+            case 'Cappuccino':
+                return require('../assets/cappuccino.png');
+            case 'Espresso':
+                return require('../assets/espresso.png');
+            case 'Large':
+                return require('../assets/large.png')
+            case 'Venti':
+                return require('../assets/medium.png')
+
+            default:
+                return require('../assets/small.png')
+        }
+    }
     return (
         <List.Item
             title={title}
@@ -12,14 +27,7 @@ const CoffeeElementItem = ({ title, ...otherProps }) => {
             left={otherProps =>
                 <Image
                     source={
-                        title === 'Cappuccino' ? require('../assets/cappuccino.png') :
-                            (title === 'Espresso' ? require('../assets/espresso.png') :
-                                (title === 'Large' ? require('../assets/large.png') :
-                                    (title === 'Venti' ? require('../assets/medium.png') :
-                                        require('../assets/small.png')
-                                    )
-                                )
-                            )
+                        getImageByTitle(title)
                     }
                     style={{ width: 50, height: 50, marginHorizontal: 10 }}
                 />

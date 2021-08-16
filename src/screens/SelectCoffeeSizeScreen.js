@@ -12,11 +12,11 @@ const SelectCoffeeSizeScreen = (props) => {
     const coffeeObjSizes = store.getState().coffeeItems.coffeeObj.sizes;
     console.log("coffeeobjsize :: ", coffeeObjSizes, selectedCoffeeSizes);
 
-    const [availableSizes, setAvaialbleSizes] = useState([]);
+    const [availableSizes, setAvailableSizes] = useState([]);
 
     useEffect(() => {
-        setAvaialbleSizes(getCoffeeSizes());
-        console.log("availassseize : ", availableSizes);
+        setAvailableSizes(getCoffeeSizes());
+        console.log("availableSizes : ", availableSizes);
     }, []);
 
     const getCoffeeSizes = () => {
@@ -37,29 +37,25 @@ const SelectCoffeeSizeScreen = (props) => {
     return (
         <Surface style={{ flex: 1 }}>
             <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
-            <View>
-                <Title style={{ marginHorizontal: 15, fontSize: 24 }}>Select your size</Title>
+            <Title style={{ marginHorizontal: 15, fontSize: 24 }}>Select your size</Title>
 
-                <View style={{ marginHorizontal: 15 }}>
-
-                    {
-                        availableSizes && (
-                            availableSizes.map((item) => {
-                                return (
-                                    <CoffeeElementItem title={item.name}
-                                        key={item._id}
-                                        size="50"
-                                        onPress={() => {
-                                            store.dispatch({ type: 'SET_SELECTED_COFFEE_SIZE', newValue: item })
-                                            props.navigation.navigate('SelectCoffeeExtrasScreen')
-                                        }}
-                                    />
-                                )
-                            })
-                        )
-                    }
-                </View>
-
+            <View style={{ marginHorizontal: 15 }}>
+                {
+                    availableSizes && (
+                        availableSizes.map((item) => {
+                            return (
+                                <CoffeeElementItem title={item.name}
+                                    key={item._id}
+                                    size="50"
+                                    onPress={() => {
+                                        store.dispatch({ type: 'SET_SELECTED_COFFEE_SIZE', newValue: item })
+                                        props.navigation.navigate('SelectCoffeeExtrasScreen')
+                                    }}
+                                />
+                            )
+                        })
+                    )
+                }
             </View>
         </Surface>
     )
